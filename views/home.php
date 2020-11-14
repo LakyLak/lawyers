@@ -1,10 +1,16 @@
 <?php
 $this->title = 'Law';
+
+$handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
+fwrite($handle, 'home view' . PHP_EOL);
+fwrite($handle, 'pk' . PHP_EOL);
+fwrite($handle, print_r($pk, true) . PHP_EOL);
+
 ?>
 
 <div class="container">
   <div class="card-columns d-flex justify-content-center">
-    <div class="card layers-card">
+    <div class="card lawyers-color">
       <div class="card-block">
         <h4 class="card-title">Lawyers</h4>
         <p class="card-text">Portal for lawyers. Enter if you are offering services as lawyer.</p>
@@ -18,7 +24,7 @@ $this->title = 'Law';
         </ul>
       </div>
     </div>
-    <div class="card citizens-card">
+    <div class="card citizens-color">
       <div class="card-block">
         <h4 class="card-title">Citizens</h4>
         <p class="card-text">Portal for citizens. Enter if you are looking for services of lawyer.</p>

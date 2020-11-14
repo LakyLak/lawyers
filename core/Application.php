@@ -3,6 +3,7 @@
 namespace app\core;
 
 use app\core\db\Database;
+use app\core\db\DbModel;
 
 class Application
 {
@@ -13,16 +14,15 @@ class Application
     public $session;
     public $db;
     public static $app;
-//    public $webUserClass;
     public $webUser;
     public $controller;
     public $view;
 
     public function __construct($rootPath, array $config)
     {
-        $handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
-        fwrite($handle, 'App constructor' . PHP_EOL);
-        
+//        $handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
+//        fwrite($handle, 'App constructor' . PHP_EOL);
+
         self::$root_directory = $rootPath;
 
         self::$app      = $this;
@@ -33,12 +33,26 @@ class Application
         $this->session  = new Session();
         $this->view     = new View();
 
+        $this->webUser = $this->getWebUser($config);
+
+//        $sessionWebUserData = $this->session->get(Session::USER_KEY);
+//        if ($sessionWebUserData) {
+//            $webUserArray  = explode('-', $sessionWebUserData);
+//            $class         = $config['webUserClasses'][$webUserArray[0]];
+//            $this->webUser = $class::findByPk($webUserArray[1]);
+//        }
+    }
+
+    private function getWebUser(array $config)
+    {
         $sessionWebUserData = $this->session->get(Session::USER_KEY);
         if ($sessionWebUserData) {
             $webUserArray  = explode('-', $sessionWebUserData);
             $class         = $config['webUserClasses'][$webUserArray[0]];
-            $this->webUser = $class::findByPk($webUserArray[1]);
+            return $class::findByPk($webUserArray[1]);
         }
+
+        return null;
     }
 
     public function run()
@@ -88,6 +102,8 @@ class Application
 
     public static function getClassName(): ?string
     {
+        $handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
+        fwrite($handle, 'getClassName' . PHP_EOL);
         if (!self::$app->webUser) {
             return null;
         }

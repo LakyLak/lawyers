@@ -29,7 +29,7 @@ if ($webUser) {
   </head>
   <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #e3f2fd;">
+    <nav class="navbar navbar-expand-lg navbar-dark <?php echo isset($class) ? $class . 's-color' : 'bg-dark'; ?>">
       <a class="navbar-brand" href="/">Law Online Registry</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

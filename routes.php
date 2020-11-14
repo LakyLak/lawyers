@@ -25,8 +25,8 @@ $routes = [
     ['get', '/logout', CitizenController::class, 'actionLogout'],
 
     ['get', '/appointments', AppointmentController::class, 'actionList'],
-    ['get', '/appointment/add', AppointmentController::class, 'actionAdd'],
-    ['post', '/appointment/add', AppointmentController::class, 'actionAdd'],
+    ['get', '/appointment/create', AppointmentController::class, 'actionCreate'],
+    ['post', '/appointment/create', AppointmentController::class, 'actionCreate'],
     ['get', '/appointment/edit', AppointmentController::class, 'actionEdit'],
     ['post', '/appointment/edit', AppointmentController::class, 'actionEdit'],
     ['get', '/appointment/delete', AppointmentController::class, 'actionDelete'],

@@ -10,11 +10,14 @@ use app\core\Model;
 class HTML
 {
     protected static $iconsMapping = [
-        'view'   => 'eye',
-        'edit'   => 'pencil',
-        'remove' => 'trash',
-        'delete' => 'X',
-        'add'    => 'plus',
+        'view'     => 'eye',
+        'edit'     => 'pencil',
+        'remove'   => 'trash',
+        'delete'   => 'X',
+        'add'      => 'plus',
+        'cancel'   => 'ban',
+        'schedule' => 'calendar',
+        'approve'  => 'check',
     ];
 
     public static function beginForm(string $action, string $method, string $id = null): void
@@ -188,5 +191,6 @@ class HTML
         }
 
         echo $destination;
+        return $destination;
     }
 }
