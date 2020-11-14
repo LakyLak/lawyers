@@ -1,0 +1,111 @@
+.carousel-caption {
+  /*color: darkorange;*/
+}
+
+.carousel {
+  /* any dimensions are fine, it can be responsive with max-width */
+  width: auto;
+  height: 100%;
+}
+
+.carousel-inner {
+  /* make sure your .items will get correct height */
+  height: 100%;
+}
+
+.carousel-item {
+  background-size: cover;
+  background-position: 50% 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-item img {
+  width: auto;
+  height: 800px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.filter-field {
+  margin: 15px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+.filter form {
+  display: inline-flex;
+}
+
+.content-card {
+  margin-top: 40px;
+}
+
+.table-input-actions {
+  width:60px;
+  /*vertical-align:middle!important;*/
+  /*margin-bottom:2rem!important;*/
+}
+
+.table-input-addition {
+  margin-top:2rem!important;
+}
+
+.non-duration-input {
+  display: none;
+}
+.duration-input {
+  display: none;
+}
+.card-columns {
+  margin: 50px;
+  height: 400px;
+  color: aliceblue;
+}
+
+.layers-card {
+  background-color: #33595a;
+}
+.citizens-card {
+  background-color: #5c2918;
+}
+
+.card-block {
+  margin: 60px auto;
+  width: 70%;
+  border: 3px solid black;
+  padding: 10px;
+  text-align: center;
+}
+.card-block ul {
+  list-style-type: none;
+  padding: 15px;
+}
+.card-block ul li {
+  display: inline-block;
+}
+
+.form-card {
+  width: 60%;
+  padding: 50px;
+  color: white;
+  margin: 50px auto;
+}
+
+.form-card-lawyer {
+  background-color: #33595a;
+}
+.form-card-citizen {
+  background-color: #5c2918;
+}
+
+.form-card h1 {
+  text-align: center;
+}
