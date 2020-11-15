@@ -41,7 +41,7 @@ $week = $cal->getWeekInfo($timestamp);
     </thead>
 
     <tbody>
-    <?php for($hour = 15; $hour <= 23; $hour++): ?>
+    <?php for($hour = 9; $hour <= 17; $hour++): ?>
         <tr>
       <?php foreach($week['week'] as $dayNo => $dayDate): ?>
           <td class="<?php

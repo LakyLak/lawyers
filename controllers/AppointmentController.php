@@ -10,6 +10,7 @@ use app\core\helper\HTML;
 use app\models\Appointment;
 use app\models\Calendar;
 use app\models\Lawyer;
+use app\models\Mailer;
 
 class AppointmentController extends BaseController
 {
@@ -36,6 +37,9 @@ class AppointmentController extends BaseController
             $appointment->loadData($params);
 
             if ($appointment->validate() && $appointment->save()) {
+                Mailer::notify($appointment->citizen,Mailer::MAIL_INITIAL);
+                Mailer::notify($appointment->lawyer,Mailer::MAIL_NEW);
+
                 $this->redirect(HTML::url('/appointments', ['citizenId' => $params['citizenId']]));
             }
         }
@@ -46,6 +50,7 @@ class AppointmentController extends BaseController
         foreach ($lawyers as $lawyer) {
             $lawyerOptions[$lawyer->lawyerId] = "$lawyer->firstName $lawyer->lastName";
         }
+
         return $this->render('appointments/create', [
             'lawyers' => $lawyerOptions
         ]);
@@ -98,6 +103,8 @@ class AppointmentController extends BaseController
             $handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
             fwrite($handle, 'Unable to Cancel Appointment' . PHP_EOL);
         }
+        Mailer::notify($appointment->citizen,Mailer::MAIL_CANCELED);
+        Mailer::notify($appointment->lawyer,Mailer::MAIL_CANCELED);
 
         $this->redirect(HTML::url('/appointments', ['citizenId' => $citizenId]));
     }
@@ -111,6 +118,9 @@ class AppointmentController extends BaseController
             $appointment->loadData($params);
 
             if ($appointment->validate() && $appointment->save()) {
+                Mailer::notify($appointment->citizen,Mailer::MAIL_RESCHEDULED);
+                Mailer::notify($appointment->lawyer,Mailer::MAIL_RESCHEDULED);
+
                 $this->redirect(HTML::url('/appointments', ['citizenId' => $appointment->citizenId]));
             }
         }
@@ -135,6 +145,8 @@ class AppointmentController extends BaseController
         $appointment->status = Appointment::STATUS_APPROVED;
 
         if ($appointment->validate() && $appointment->save()) {
+            Mailer::notify($appointment->citizen,Mailer::MAIL_APPROVED);
+
             $this->redirect(HTML::url('/appointments', ['lawyerId' => $appointment->lawyerId]));
         }
     }
@@ -147,6 +159,8 @@ class AppointmentController extends BaseController
         $appointment->status = Appointment::STATUS_REJECTED;
 
         if ($appointment->validate() && $appointment->save()) {
+            Mailer::notify($appointment->citizen,Mailer::MAIL_REJECTED);
+
             $this->redirect(HTML::url('/appointments', ['lawyerId' => $appointment->lawyerId]));
         }
     }
