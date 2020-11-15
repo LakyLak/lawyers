@@ -50,13 +50,6 @@ class Appointment extends DbModel
         ];
     }
 
-    public function save()
-    {
-        $this->status = self::STATUS_NEW;
-
-        return parent::save();
-    }
-
     public function getDisplayDateTime()
     {
         $hourFrom = $this->hour . ":00";

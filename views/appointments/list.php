@@ -31,10 +31,7 @@ $handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
             <?php
               if(Application::getClassName() == 'lawyer' && $row->status == Appointment::STATUS_NEW) {
                   HTML::actionButton('approve', ['appointment', 'appointmentId=' . $row->appointmentId]);
-                  HTML::actionButton('cancel',
-                                           ['appointment', 'appointmentId=' . $row->appointmentId],
-                                           ['title' => 'Reject'],
-                    );
+                  HTML::actionButton('reject', ['appointment', 'appointmentId=' . $row->appointmentId]);
               } elseif(Application::getClassName() == 'citizen') {
                   if ($row->status != Appointment::STATUS_APPROVED) {
                       HTML::actionButton('schedule',

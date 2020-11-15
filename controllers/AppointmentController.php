@@ -29,8 +29,9 @@ class AppointmentController extends BaseController
         $params = $this->getBody();
 
         if ($this->isPost()) {
-            $appointment = new Appointment();
+            $appointment         = new Appointment();
             $params['citizenId'] = Application::$app->webUser->citizenId;
+            $params['status']    = Appointment::STATUS_NEW;
 
             $appointment->loadData($params);
 
@@ -80,6 +81,10 @@ class AppointmentController extends BaseController
             $bookings[$appointment->date][] = $appointment->hour;
         }
 
+        if (isset($params['appointmentId'])) {
+            return Calendar::renderWeekCalendar($bookings, $direction, $timestamp, $params['lawyerId'], true, $params['appointmentId']);
+        }
+
         return Calendar::renderWeekCalendar($bookings, $direction, $timestamp, $params['lawyerId']);
     }
 
@@ -99,17 +104,11 @@ class AppointmentController extends BaseController
 
     public function actionSchedule()
     {
-        $handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
         $params = $this->getBody();
-        fwrite($handle, 'params' . PHP_EOL);
-        fwrite($handle, print_r($params, true) . PHP_EOL);
-
         $appointment = Appointment::findbyPk((int)$params['appointmentId']);
 
         if ($this->isPost()) {
             $appointment->loadData($params);
-            fwrite($handle, '$appointment' . PHP_EOL);
-            fwrite($handle, print_r($appointment, true) . PHP_EOL);
 
             if ($appointment->validate() && $appointment->save()) {
                 $this->redirect(HTML::url('/appointments', ['citizenId' => $appointment->citizenId]));
@@ -126,5 +125,29 @@ class AppointmentController extends BaseController
             'bookings'    => $bookings,
             'appointment' => $appointment,
         ]);
+    }
+
+    public function actionApprove()
+    {
+        $params = $this->getBody();
+        $appointment = Appointment::findByPk($params['appointmentId']);
+
+        $appointment->status = Appointment::STATUS_APPROVED;
+
+        if ($appointment->validate() && $appointment->save()) {
+            $this->redirect(HTML::url('/appointments', ['lawyerId' => $appointment->lawyerId]));
+        }
+    }
+
+    public function actionReject()
+    {
+        $params = $this->getBody();
+        $appointment = Appointment::findByPk($params['appointmentId']);
+
+        $appointment->status = Appointment::STATUS_REJECTED;
+
+        if ($appointment->validate() && $appointment->save()) {
+            $this->redirect(HTML::url('/appointments', ['lawyerId' => $appointment->lawyerId]));
+        }
     }
 }

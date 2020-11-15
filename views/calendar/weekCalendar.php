@@ -14,15 +14,11 @@ use app\models\Calendar;
  */
 
 $cal = new Calendar();
-
 $week = $cal->getWeekInfo($timestamp);
-$handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
-//fwrite($handle, 'week' . PHP_EOL);
-//fwrite($handle, print_r($week, true) . PHP_EOL);
-//fwrite($handle, print_r($bookings, true) . PHP_EOL);
+
 ?>
 
-<div class="container">
+<div class="container" id="week-calendar">
   <div class="cal-navigation">
   <a id="prev" class="cal-nav btn btn-secondary">Previous Week</a>
   <a id="today" class="cal-nav btn btn-info">Today</a>
@@ -38,13 +34,14 @@ $handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
       </tr>
       <tr>
         <?php foreach($week['week'] as $dayDate): ?>
+          <?php fwrite($handle, 'dayDate => ' . $dayDate . PHP_EOL); ?>
           <td><?php echo $dayDate ?></td>
         <?php endforeach; ?>
       </tr>
     </thead>
 
     <tbody>
-    <?php for($hour = 9; $hour <= 17; $hour++): ?>
+    <?php for($hour = 15; $hour <= 23; $hour++): ?>
         <tr>
       <?php foreach($week['week'] as $dayNo => $dayDate): ?>
           <td class="<?php
@@ -89,23 +86,32 @@ $handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
   {
   	$('.cal-navigation a').click(function(event) {
 		  event.preventDefault();
+      var appointmentId = '<?php echo ($appointmentId ?? '') ?>';
+      var suffix = '';
+		  if (appointmentId != '') {
+		  	suffix = "&appointmentId=" + appointmentId;
+      }
+
 		  if ($(this).attr('id') == 'today')
       {
-        var params = "lawyerId=<?php echo $lawyerId; ?>&direction=0";
+        var params = "lawyerId=<?php echo $lawyerId; ?>&direction=0" + suffix;
       } else {
-		    var params = $(this).attr('id') + "=true&" + jQuery.param({lawyerId:<?php echo $lawyerId; ?>,  direction:<?php echo $direction; ?>});
+		    var params = $(this).attr('id') + "=true&" +
+            jQuery.param({lawyerId:<?php echo $lawyerId; ?>,  direction:<?php echo $direction; ?>}) + suffix;
       }
 
       jQuery.ajax({
         url: "/appointment/buildCalendar?" + params,
         type: "GET",
         success: function(data) {
-          $("#cal-container").html(data);
+        	console.log(data);
+
+          $("#week-calendar").html(data);
         },
         error: function(data) {
           if (data.status == 500)
           {
-            $("#cal-container").html(data.responseText);
+            $("#week-calendar").html(data.responseText);
           }
         }
 		  });

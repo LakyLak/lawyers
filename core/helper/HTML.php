@@ -18,6 +18,7 @@ class HTML
         'cancel'   => 'ban',
         'schedule' => 'calendar',
         'approve'  => 'check',
+        'reject'   => 'eject',
     ];
 
     public static function beginForm(string $action, string $method, string $id = null): void
