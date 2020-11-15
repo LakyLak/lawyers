@@ -109,3 +109,21 @@ footer {
 .form-card h1 {
   text-align: center;
 }
+
+.cal thead th, td {
+  text-align: center;
+  width: 120px;
+}
+.cal tbody button {
+  width: 100%;
+}
+.cal-navigation a {
+  width: 150px;
+}
+.today {
+  background-color: #eee27cde;
+}
+
+thead tr {
+  text-align: center;
+}

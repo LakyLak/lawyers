@@ -27,8 +27,9 @@ $routes = [
     ['get', '/appointments', AppointmentController::class, 'actionList'],
     ['get', '/appointment/create', AppointmentController::class, 'actionCreate'],
     ['post', '/appointment/create', AppointmentController::class, 'actionCreate'],
-    ['get', '/appointment/edit', AppointmentController::class, 'actionEdit'],
-    ['post', '/appointment/edit', AppointmentController::class, 'actionEdit'],
-    ['get', '/appointment/delete', AppointmentController::class, 'actionDelete'],
+    ['get', '/appointment/buildCalendar', AppointmentController::class, 'actionBuildCalendar'],
+    ['get', '/appointment/cancel', AppointmentController::class, 'actionCancel'],
+    ['get', '/appointment/schedule', AppointmentController::class, 'actionSchedule'],
+    ['post', '/appointment/schedule', AppointmentController::class, 'actionSchedule'],
 ];
 

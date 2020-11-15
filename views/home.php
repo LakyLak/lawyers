@@ -1,11 +1,5 @@
 <?php
 $this->title = 'Law';
-
-$handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
-fwrite($handle, 'home view' . PHP_EOL);
-fwrite($handle, 'pk' . PHP_EOL);
-fwrite($handle, print_r($pk, true) . PHP_EOL);
-
 ?>
 
 <div class="container">

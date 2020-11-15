@@ -7,10 +7,6 @@ use app\models\Appointment;
 $this->title = 'Appointments';
 
 $handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
-
-fwrite($handle, '$data' . PHP_EOL);
-fwrite($handle, print_r($data, true) . PHP_EOL);
-
 ?>
 
 <div class="container">

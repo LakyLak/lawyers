@@ -102,8 +102,6 @@ class Application
 
     public static function getClassName(): ?string
     {
-        $handle = fopen($_SERVER['DOCUMENT_ROOT'] .'/logs/log.txt','a+');
-        fwrite($handle, 'getClassName' . PHP_EOL);
         if (!self::$app->webUser) {
             return null;
         }

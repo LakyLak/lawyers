@@ -79,15 +79,14 @@ class HTML
 
     public static function inputField(string $type, Model $model, string $attributeName, array $options = []): void
     {
-        
-        echo sprintf(
+        $label = $type != 'hidden' ? sprintf('<label>%s</label>', self::getLabel($attributeName, $options)): '';
+
+        echo $label . sprintf(
             '
-              <label>%s</label>
               <input placeholder="%s" type="%s" id="%s" name="%s" value="%s" %s
                 class="form-control%s">
               <div class="invalid-feedback">%s</div>
             ',
-            self::getLabel($attributeName, $options),
             $options['placeholder'] ?? '',
             $type,
             $attributeName,

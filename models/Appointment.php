@@ -31,7 +31,7 @@ class Appointment extends DbModel
 
     public function attributes(): array
     {
-        return ['lawyerId', 'citizenId', 'date', 'time', 'status'];
+        return ['lawyerId', 'citizenId', 'date', 'hour', 'status'];
     }
 
     public function relations(): array
@@ -45,12 +45,16 @@ class Appointment extends DbModel
     public function rules(): array
     {
         return [
-//            'law' => ['required'],
-//            'lastName'  => ['required'],
-//            'email'     => ['required', 'email'],
-            //            @TODO implement scenario (on => insert) to existing rule
-            //            'email'     => ['required', 'email', 'unique' => self::class],
+            'lawyerId'  => ['required'],
+            'citizenId' => ['required'],
         ];
+    }
+
+    public function save()
+    {
+        $this->status = self::STATUS_NEW;
+
+        return parent::save();
     }
 
     public function getDisplayDateTime()
@@ -59,5 +63,13 @@ class Appointment extends DbModel
         $hourTo   = $this->hour + 1 . ":00";
 
         return "<b>$this->date</b> $hourFrom-$hourTo";
+    }
+
+    public static function getHumanHour(int $hour): array
+    {
+        return [
+            'start' => $hour . ":00",
+            'end'   => $hour + 1 . ":00",
+        ];
     }
 }
